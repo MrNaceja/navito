@@ -1,0 +1,25 @@
+{
+  "name": "navito",
+  "description": "A simple Vanilla JS router called Navito (Navigate To).",
+  "version": "1.0.0",
+  "author": "MrNaceja",
+  "license": "ISC",
+  "keywords": [
+    "Router",
+    "Vanilla Router",
+    "JS Router",
+    "Simple Router",
+    "Router JS"
+  ],
+  "type": "module",
+  "scripts": {
+    "example": "npm --prefix ./example run start",
+    "build": "dts-bundle-generator src/navito.ts -o dist/navito.d.ts && node esbuild.config.js",
+    "start": "npm run build && npm run example" 
+  },
+  "devDependencies": {
+    "dts-bundle-generator": "^9.5.1",
+    "esbuild": "^0.25.4",
+    "typescript": "^5.8.3"
+  }
+}
