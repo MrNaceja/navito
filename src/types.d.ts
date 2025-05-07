@@ -74,6 +74,8 @@ type RouteIntercepter = {
     after: (...hooks: HookHandler[]) => void;
 }
 
+type NavitoLinkVariant = 'fill' | 'outline' | 'ghost' | 'underline' | undefined;
+
 
 declare global {
     interface Window {
