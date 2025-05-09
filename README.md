@@ -5,11 +5,35 @@
 ---
 
 ## 📦 Installation  
-Include the script in your HTML file:  
+There are two ways to use the Navito provided, Global and Module.
+  * `Global` - The Navito class will be available in the window.
+  * `Module` - The Navito class will need to be imported.
+
+Using CDN:
+
+### Global:
+
+`URL`: https://cdn.jsdelivr.net/gh/MrNaceja/navito@latest/dist/navito.global.min.js
 
 ```html
-<script src="path/to/navito.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MrNaceja/navito@latest/dist/navito.global.min.js"></script>
 ```
+```js
+const navito = window.Navito('/');
+// or
+const navito = Navito('/');
+```
+
+### Module:
+
+`URL`: https://cdn.jsdelivr.net/gh/MrNaceja/navito@latest/dist/navito.module.min.js
+
+```js
+import Navito from 'https://cdn.jsdelivr.net/gh/MrNaceja/navito@latest/dist/navito.module.min.js';
+const navito = Navito('/');
+```
+
+or access builds releases to download a dist! [Get Now](https://github.com/MrNaceja/navito/releases)
 
 ---
 
