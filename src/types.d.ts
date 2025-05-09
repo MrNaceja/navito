@@ -23,6 +23,11 @@ type RouteContext = {
      * The intercepted route query params (as query string)
      */
     query_string: string;
+
+    /**
+     * The current navigation state.
+     */
+    state?: Record<string, any>
 }
 
 type Hooks = {
@@ -75,6 +80,11 @@ type RouteIntercepter = {
 }
 
 type NavitoLinkVariant = 'fill' | 'outline' | 'ghost' | 'underline' | undefined;
+
+type NavigationState = {
+    path: string,
+    data?: Record<string, any>
+}
 
 
 declare global {

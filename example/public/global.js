@@ -9,6 +9,9 @@ const link_to_products = Navito.Link('/products', 'Product').noVariant();
 nav.append(link_to_home, link_to_contact, link_to_product, link_to_products);
 
 navito.before((ctx) => console.log('Global before hook has called with this context: ', ctx));
+navito.whenNotFound(() => {
+    alert('404 - Page not found');
+});
 
 navito.intercept('/', (ctx) => {
     console.log(ctx);

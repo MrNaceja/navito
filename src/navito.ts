@@ -1,5 +1,5 @@
 import NavitoLink from "./navito-link.js";
-import { HookHandler, Hooks, Route, RouteContext, RouteHandler, RouteIntercepter } from "./types.js";
+import { HookHandler, Hooks, NavigationState, Route, RouteContext, RouteHandler, RouteIntercepter } from "./types.js";
 
 /**
  * A simple Vanilla JS router called Navito (Navigate To).
@@ -92,6 +92,18 @@ export default class Navito {
     }
 
     /**
+     * Define a not found (404) hanlder to router.
+     * @param handler - The handler to not found routes
+     * @returns {Navito}
+     */
+    public whenNotFound(handler: RouteHandler) {
+        this.intercept('404', handler).before(() => {
+            this.updateNavigationState({ path: '/404'});
+        });
+        return this;
+    }
+
+    /**
      * Intercept a route path and register a handler for it.
      * The handler will be called when the route is matched.
      * @param {string} path          - The route path to intercept.
@@ -148,10 +160,11 @@ export default class Navito {
         if (current_path === this.current_running_path) return;
         this.current_running_path = current_path;
 
-        const route = this.useRouteFromPath(current_path);
+        const route = this.useRouteByPath(current_path);
         if ( !route ) return;
 
         this.run(route);
+        
     }
 
     /**
@@ -211,6 +224,16 @@ export default class Navito {
     }
 
     /**
+     * Update navigation state changing browser url and set new route state.
+     * @param {NavigationState} state 
+     * @returns {Navito}
+     */
+    private updateNavigationState({ path, data } : NavigationState): Navito {
+        history.pushState(data, '', path);
+        return this;
+    }
+
+    /**
      * Navigate to a specified path route.
      * @param path - The path to navigate to.
      * @returns {Navito}
@@ -220,7 +243,7 @@ export default class Navito {
         if (!path.startsWith(this.root_path)) {
             path = this.root_path.replace(/\/$/, '') + path;
         }
-        history.pushState(null, '', path);
+        this.updateNavigationState({ path });
         this.react();
         return this;
     }
@@ -230,13 +253,13 @@ export default class Navito {
      * @param {string} path - The path to intercepted route
      * @returns {Route | null}
      */
-    private useRouteFromPath(path: string): Route | null {
+    private useRouteByPath(path: string): Route | undefined {
         for (const route of this.routes.values()) {
             if ( route.regex.test(path) ) {
                 return route;
             }
         }
-        return null;
+        return this.routes.get('404');
     }
 
     /**
@@ -272,7 +295,8 @@ export default class Navito {
             current_location: this.current_running_path,
             route_params: params,
             query_params: new URLSearchParams(window.location.search),
-            query_string: window.location.search
+            query_string: window.location.search,
+            state: history.state
         };
     }
 }
