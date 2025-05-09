@@ -65,6 +65,7 @@ new Navito(root_path?: string)
 A custom HTML element for navigation:  
 
 Using directly into DOM:
+
 ```html
 <navito-link to="/about" variant="fill">About</navito-link>
 ```
@@ -97,6 +98,16 @@ link.noVariant();
 | `variantOutline()` | Define to use OUTLINE variant. | `NavitoLink` |
 | `variantUnderline()` | Define to use UNDERLINE variant. | `NavitoLink` |
 
+You can style the NavitoLink with the selector `navito-link` as:
+```css
+navito-link {
+  /* use --highlight-color to change the variant´s highlight color */
+  &[variant="fill"] {}
+  &[variant="ghost"] {}
+  &[variant="outline"] {}
+  &[variant="underline"] {}
+}
+``` 
 ---
 
 ### 🔗 Some Types  
