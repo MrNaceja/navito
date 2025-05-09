@@ -177,6 +177,16 @@ router.intercept("/products/:id", ProductPage).before((ctx) => {
   console.log("Product ID:", ctx.route_params.id); // e.g., "123"
 });
 
+router.whenNotFound(() => {
+  const page_404 = (new DOMParser()).parseFromString(`
+    <h1>404</h1>
+    <p>Page not found!</p>
+    <navito-link to="/" variant="outline">Back to home</navito-link>
+  `, 'text/html');
+
+  document.body.append(...Array.from(page_404.body.children));
+});
+
 router.on(); // Initialize
 ```
 
