@@ -174,8 +174,15 @@ router.to("/contact"); // Navigates to "/contact"
 ---
 
 ## 🤝 Contributing  
-PRs and issues are welcome!  
 
+1. Clone this project.
+2. Run `npm i`. 
+3. Run `npm run start`.
+
+### Project Development scripts
+  * `npm run example`: Runs the example HTML test server.
+  * `npm run build`: Generates the bundles and types on dist directory.
+  * `npm run start`: Generates the bundles and types on dist directory AND Runs the example HTML test server.
 ---
 
 **Made with ❤️ by Naceja**
