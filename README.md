@@ -15,7 +15,7 @@ Include the script in your HTML file:
 
 ## 🛠️ API Documentation  
 
-### `Navito` Class  
+### `Navito` Router  
 
 #### **Constructor**  
 ```js
@@ -33,10 +33,51 @@ new Navito(root_path?: string)
 | `on()` | Initializes the router (must be called after defining routes). | `Navito` |
 | `to(path)` | Navigates to the specified path. | `Navito` |
 | `static Link(to, label)` | Creates a custom `<navito-link>` element for navigation. | `NavitoLink` |
+| `whenNotFound(handler)` | Add a not found (404) handler. | `Navito` |
 
 ---
 
-### **RouteContext**  
+### `NavitoLink` Element 
+A custom HTML element for navigation:  
+
+Using directly into DOM:
+```html
+<navito-link to="/about" variant="fill">About</navito-link>
+```
+- `to`: Path to navigate to.  
+- `variant`: The link style variants.
+  * `underline`: A underlined variant (as link).
+  * `fill`: A filled variant (as button filled). 
+  * `outline`: A outlined variant (as button wiht border and label with same color).
+  * `ghost`: A ghosted variant (as text with button smoothy style when hover).
+  * or don´t define the "variant" attribute to full customization.
+
+or create programmatically
+
+```js
+const link = Navito.Link('/about', 'About');
+// with variant definition:
+link.variantFill();
+link.variantGhost();
+link.variantUnderline();
+link.variantOutline();
+// or withour variant (to full customization):
+link.noVariant();
+```
+#### **Methods**  
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `noVariant()` | Define to don´t use variant, util to full customization. | `NavitoLink` |
+| `variantFill` | Define to use FILL variant. | `NavitoLink` |
+| `variantGhost()` | Define to use GHOST variant. | `NavitoLink` |
+| `variantOutline()` | Define to use OUTLINE variant. | `NavitoLink` |
+| `variantUnderline()` | Define to use UNDERLINE variant. | `NavitoLink` |
+
+---
+
+### 🔗 Some Types  
+
+#### **RouteContext**  
 An object passed to route handlers and hooks:  
 
 ```ts
@@ -48,26 +89,34 @@ type RouteContext = {
 };
 ```
 
+Example:
+
+```ts
+const product_handler: RouteHandler = (ctx: RouteContext) => {
+  alert('Product ID: ' + ctx.route_params.id);
+}
+navito.intercept('/products:/id', product_handler)
+```
 ---
 
-### **RouteIntercepter**  
-Returned by `intercept()`, allowing hooks for a specific route:  
+#### **RouteIntercepter**  
+Returned by `Navito.intercept()`, allowing hooks for a specific route:  
 
 | Method | Description |
 |--------|-------------|
 | `before(...hooks)` | Runs **before** the route handler (if returns `false`, the handler is skipped). |
 | `after(...hooks)` | Runs **after** the route handler. |
 
----
+Example:
 
-### **NavitoLink**  
-A custom HTML element for navigation:  
-
-```html
-<navito-link to="/about" label="About"></navito-link>
+```ts
+navito.intercept('/home', () => {
+  // /home logic...
+})
+.before(() => {
+  document.title = "Welcome to Navito";
+})
 ```
-- `to`: Path to navigate to.  
-- `label`: Link text.  
 
 ---
 
@@ -75,16 +124,22 @@ A custom HTML element for navigation:
 
 ### **Basic Routing**  
 ```js
-const router = new Navito("/app");
+const router = new Navito("/");
 
-router.intercept("/", (context) => {
-  console.log("Context:", context);
-});
+const HomePage = () => {
+  const home = document.createElement('section');
+  document.body.append(home);
+}
+router.intercept("/", HomePage);
 
-router.intercept("/products/:id", ({ route_params }) => {
-  console.log("Product ID:", route_params.id); // e.g., "123"
-}).before((ctx) => {
-  console.log("Before product load:", ctx.current_location);
+const ProductPage = async ({ route_params: { id } }) => {
+  const product_details = await (await fetch(`/products/${id}`)).json();
+  const product = document.createElement('section');
+  product.textContent(`Buy Product ${product_details.name} - R$${product_details.price}`);
+  document.body.append(product);
+}
+router.intercept("/products/:id", ProductPage).before((ctx) => {
+  console.log("Product ID:", ctx.route_params.id); // e.g., "123"
 });
 
 router.on(); // Initialize
@@ -104,16 +159,6 @@ router.after((ctx) => {
 ### **Programmatic Navigation**  
 ```js
 router.to("/contact"); // Navigates to "/contact"
-```
-
-### **Custom Link Element**  
-```js
-const link = Navito.Link("/about", "About Us");
-document.body.appendChild(link);
-```
-Or in HTML:  
-```html
-<navito-link to="/about">About Us</navito-link>
 ```
 
 ---

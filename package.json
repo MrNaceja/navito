@@ -1,7 +1,7 @@
 {
   "name": "navito",
   "description": "A simple Vanilla JS router called Navito (Navigate To).",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "author": "MrNaceja",
   "license": "ISC",
   "keywords": [
