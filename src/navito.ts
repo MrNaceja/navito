@@ -163,8 +163,8 @@ export default class Navito {
         const route = this.useRouteByPath(current_path);
         if ( !route ) return;
 
+        this.updateActiveLinkForCurrentPath();
         this.run(route);
-        
     }
 
     /**
@@ -221,6 +221,18 @@ export default class Navito {
         } catch (err) {
             console.error('Route navigation error:', err);
         }
+    }
+
+    /**
+     * Update the active <navito-link/> for current path.
+     * @returns {Navito}
+     */
+    private updateActiveLinkForCurrentPath(): Navito {
+        const current_path = this.useCurrentPathLocation();
+        document.querySelectorAll('navito-link').forEach(link => {
+            link.toggleAttribute('active', (current_path == (link.getAttribute('to') || '')));
+        });
+        return this;
     }
 
     /**

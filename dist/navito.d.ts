@@ -218,6 +218,7 @@ declare class Navito {
 	 * @returns {Promise<void>}
 	 */
 	private run;
+	private updateActiveLinkForCurrentPath;
 	/**
 	 * Update navigation state changing browser url and set new route state.
 	 * @param {NavigationState} state
@@ -235,7 +236,7 @@ declare class Navito {
 	 * @param {string} path - The path to intercepted route
 	 * @returns {Route | null}
 	 */
-	private useRouteFromPath;
+	private useRouteByPath;
 	/**
 	 * Hook to use the current path location without the root path.
 	 * @returns {string} - The current path without the root path.

@@ -108,6 +108,15 @@ navito-link {
   &[variant="underline"] {}
 }
 ``` 
+And stylize a active link for path route as:
+```css
+navito-link {
+  &[active] {
+
+  }
+}
+```
+
 ---
 
 ### 🔗 Some Types  
