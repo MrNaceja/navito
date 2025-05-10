@@ -19,9 +19,9 @@ Using CDN:
 <script src="https://cdn.jsdelivr.net/gh/MrNaceja/navito@latest/dist/navito.global.min.js"></script>
 ```
 ```js
-const navito = window.Navito('/');
+const navito = new window.Navito('/');
 // or
-const navito = Navito('/');
+const navito = new Navito('/');
 ```
 
 ### Module:
@@ -30,7 +30,7 @@ const navito = Navito('/');
 
 ```js
 import Navito from 'https://cdn.jsdelivr.net/gh/MrNaceja/navito@latest/dist/navito.module.min.js';
-const navito = Navito('/');
+const navito = new Navito('/');
 ```
 
 or access builds releases to download a dist! [Get Now](https://github.com/MrNaceja/navito/releases)
@@ -130,6 +130,7 @@ type RouteContext = {
   route_params: Record<string, string>;  // e.g., { id: "1" }
   query_params: URLSearchParams;  // URL query params
   query_string: string;           // Raw query string (e.g., "?order=desc")
+  state?: Record<string, any> // Optional data to use on route
 };
 ```
 

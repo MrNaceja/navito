@@ -82,10 +82,15 @@ type RouteIntercepter = {
 type NavitoLinkVariant = 'fill' | 'outline' | 'ghost' | 'underline' | undefined;
 
 type NavigationState = {
+    /**
+     * The new path location state
+     */
     path: string,
+    /**
+     * A optional data to use on route for that path.
+     */
     data?: Record<string, any>
 }
-
 
 declare global {
     interface Window {
