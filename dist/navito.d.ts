@@ -172,7 +172,7 @@ declare class Navito {
 	/**
 	 * Compile a route path into a regex and extract parameter names.
 	 * @param {string} path - The route path to compile.
-	 * @returns {{ regex: RegExp, paramNames: string[] }}
+	 * @returns {{ regex: RegExp, param_names: string[] }}
 	 */
 	private compileRoutePath;
 	/**
@@ -218,6 +218,10 @@ declare class Navito {
 	 * @returns {Promise<void>}
 	 */
 	private run;
+	/**
+	 * Update the active <navito-link/> for current path.
+	 * @returns {Navito}
+	 */
 	private updateActiveLinkForCurrentPath;
 	/**
 	 * Update navigation state changing browser url and set new route state.
