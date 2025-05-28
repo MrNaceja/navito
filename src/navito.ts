@@ -54,21 +54,21 @@ export default class Navito {
     /**
      * Compile a route path into a regex and extract parameter names.
      * @param {string} path - The route path to compile.
-     * @returns {{ regex: RegExp, paramNames: string[] }}
+     * @returns {{ regex: RegExp, param_names: string[] }}
      */
     private compileRoutePath(path: string) {
-        const paramNames: string[] = [];
+        const param_names: string[] = [];
         const regex = new RegExp(
             '^' +
             path
                 .replace(/([:*])(\w+)/g, (_, type, name) => {
-                    paramNames.push(name);
+                    param_names.push(name);
                     return type === '*' ? '(.*)' : '([^/]+)';
                 })
                 .replace(/\//g, '\\/') +
             '(?:\\/?)?$'
         );
-        return { regex, paramNames };
+        return { regex, param_names };
     }
 
      /**
@@ -111,11 +111,11 @@ export default class Navito {
      * @returns {RouteIntercepter}
      */
     public intercept(path: string, handler: RouteHandler): RouteIntercepter {
-        const { regex, paramNames } = this.compileRoutePath(path);
+        const { regex, param_names } = this.compileRoutePath(path);
         this.routes.set(path, {
             path,
             regex,
-            paramNames,
+            param_names,
             handler,
             hooks: { before: [], after: [] }
         });
@@ -299,7 +299,7 @@ export default class Navito {
         const match = this.current_running_path.match(route.regex)!;
         const params: Record<string, string> = {};
         
-        route.paramNames.forEach((name, index) => {
+        route.param_names.forEach((name, index) => {
             params[name] = match[index + 1];
         });
 

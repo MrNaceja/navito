@@ -56,7 +56,7 @@ type Route = {
      * The route param names.
      * @example /products/:id -> [ id ]
      */
-    paramNames: string[];
+    param_names: string[];
     /**
      * The intercepted route handler to execute.
      */
