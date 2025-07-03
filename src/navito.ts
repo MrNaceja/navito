@@ -241,6 +241,10 @@ export default class Navito {
      * @returns {Navito}
      */
     private updateNavigationState({ path, data } : NavigationState): Navito {
+        // Ensure the path includes the root_path
+        if (!path.startsWith(this.root_path)) {
+            path = this.root_path.replace(/\/$/, '') + path;
+        }
         history.pushState(data, '', path);
         return this;
     }
@@ -251,10 +255,6 @@ export default class Navito {
      * @returns {Navito}
      */
     public to(path: string): Navito {
-        // Ensure the path includes the root_path
-        if (!path.startsWith(this.root_path)) {
-            path = this.root_path.replace(/\/$/, '') + path;
-        }
         this.updateNavigationState({ path });
         this.react();
         return this;
