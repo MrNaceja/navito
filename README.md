@@ -86,7 +86,7 @@ link.variantFill();
 link.variantGhost();
 link.variantUnderline();
 link.variantOutline();
-// or withour variant (to full customization):
+// or without variant (to full customization):
 link.noVariant();
 ```
 #### **Methods**  
