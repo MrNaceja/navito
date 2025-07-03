@@ -25,6 +25,7 @@ export default class NavitoLink extends HTMLElement {
     constructor() {
         super();
         this.shadow_root = this.attachShadow({ mode: 'closed' });
+        this.shadow_root.innerHTML = '<slot></slot>';
     }
 
     /**
@@ -100,7 +101,6 @@ export default class NavitoLink extends HTMLElement {
      * Called when this element is appended on the DOM.
      */
     connectedCallback() {
-        this.render();
         this.beautify();
         this.addEventListener('click', this.handleClick.bind(this));
     }
@@ -213,14 +213,6 @@ export default class NavitoLink extends HTMLElement {
         this.shadow_root.querySelector('style')?.remove();
         this.shadow_root.append(style);
         return this;
-    }
-
-    /**
-     * Render element composition in shadow root.
-     */
-    private render() {
-        this.shadow_root.textContent = this.textContent;
-        this.textContent = '';
     }
 
     /**
