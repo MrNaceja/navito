@@ -86,10 +86,6 @@ declare class NavitoLink extends HTMLElement {
 	 */
 	private beautify;
 	/**
-	 * Render element composition in shadow root.
-	 */
-	private render;
-	/**
 	 * Handle click on this link to navigate with navito.
 	 * @param {MouseEvent} e
 	 */
