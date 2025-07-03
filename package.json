@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "example": "npm --prefix ./example run start",
-    "build": "dts-bundle-generator src/navito.ts -o dist/navito.d.ts && node esbuild.config.js && powershell Compress-Archive -Path dist -DestinationPath dist",
+    "build": "dts-bundle-generator src/navito.ts -o dist/navito.d.ts && node esbuild.config.js && powershell Compress-Archive -Force -Path dist -DestinationPath dist",
     "start": "npm run build && npm run example" 
   },
   "devDependencies": {
